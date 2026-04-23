@@ -1,0 +1,71 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
+  "name": "slicer_team",
+  "position": {
+    "x": 230,
+    "y": 60,
+    "height": 40,
+    "width": 200,
+    "tabOrder": 6
+  },
+  "visual": {
+    "visualType": "slicer",
+    "query": {
+      "queryState": {
+        "Field": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_teams"
+                    }
+                  },
+                  "Property": "Team Name"
+                }
+              },
+              "queryRef": "dim_teams.Team Name",
+              "nativeQueryRef": "Team Name",
+              "active": true
+            }
+          ]
+        },
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_teams"
+                    }
+                  },
+                  "Property": "Team Name"
+                }
+              },
+              "queryRef": "dim_teams.Team Name",
+              "nativeQueryRef": "Team Name",
+              "active": true
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "data": [
+        {
+          "properties": {
+            "mode": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Dropdown'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

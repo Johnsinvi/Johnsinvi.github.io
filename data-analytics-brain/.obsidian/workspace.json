@@ -1,0 +1,262 @@
+{
+  "main": {
+    "id": "6f11c995332b5f62",
+    "type": "split",
+    "children": [
+      {
+        "id": "3d76bbc377bcd9b7",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "e0687681bd517f0c",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "03_powerbi/03_data_model.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "03_data_model"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "4ab1d8b4e34c77f4",
+    "type": "split",
+    "children": [
+      {
+        "id": "71bd55f7936fe514",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "ae335d0497a4bc61",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "27d161233997e8c6",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "03e9e9ec72c89210",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ],
+        "currentTab": 1
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "ffb81280b429500c",
+    "type": "split",
+    "children": [
+      {
+        "id": "42529954ebad0de1",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "58459d6002f35732",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "02_sql/VS Code SQL Setup.md.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for VS Code SQL Setup.md"
+            }
+          },
+          {
+            "id": "51548ac330e67a0c",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "_templates/concept_template.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from concept_template"
+            }
+          },
+          {
+            "id": "2e8c1975e12d971f",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "43ee925d019af84a",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          },
+          {
+            "id": "587243ecdd36f67e",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "_templates/concept_template.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline of concept_template"
+            }
+          },
+          {
+            "id": "3ef981034e30ff62",
+            "type": "leaf",
+            "state": {
+              "type": "calendar",
+              "state": {},
+              "icon": "calendar-with-checkmark",
+              "title": "Calendar"
+            }
+          },
+          {
+            "id": "ea6fb5855e9b8943",
+            "type": "leaf",
+            "state": {
+              "type": "review-queue-list-view",
+              "state": {},
+              "icon": "SpacedRepIcon",
+              "title": "Notes Review Queue"
+            }
+          },
+          {
+            "id": "9839e99ade40a587",
+            "type": "leaf",
+            "state": {
+              "type": "git-view",
+              "state": {},
+              "icon": "git-pull-request",
+              "title": "Source Control"
+            }
+          }
+        ],
+        "currentTab": 7
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "obsidian-git:Open Git source control": false,
+      "obsidian-kanban:Create new board": false,
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false,
+      "templater-obsidian:Templater": false,
+      "obsidian-excalidraw-plugin:New drawing": false,
+      "obsidian-spaced-repetition:Review flashcards": false
+    }
+  },
+  "active": "e0687681bd517f0c",
+  "lastOpenFiles": [
+    "03_powerbi/07_build_and_interactivity.md.tmp.22460.1776903757875",
+    "pbir project/visuals_backup/pbir/visuals/slicer_team/visual.json",
+    "pbir project/visuals_backup/pbir/visuals/slicer_team",
+    "pbir project/visuals_backup/pbir/visuals/slicer_conf/visual.json",
+    "pbir project/visuals_backup/pbir/visuals/slicer_conf",
+    "pbir project/visuals_backup/pbir/visuals/bar_top_teams/visual.json",
+    "pbir project/visuals_backup/pbir/visuals/bar_top_teams",
+    "pbir project/visuals_backup/pbir/visuals/standings_table/visual.json",
+    "pbir project/visuals_backup/pbir/visuals/standings_table",
+    "pbir project/visuals_backup/pbir/visuals/line_monthly/visual.json",
+    "pbir project/visuals_backup/pbir/visuals/line_monthly",
+    "05_projects/NBA_Dashboard/05_kpis_and_metrics.md",
+    "03_powerbi/Power BI - Map of Content.md",
+    "03_powerbi/04_dax_calculations.md",
+    "05_projects/NBA_Dashboard/03_data_model.md",
+    "05_projects/NBA_Dashboard/02_data_sources.md",
+    "05_projects/NBA_Dashboard/01_discovery.md",
+    "_templates/concept_template.md",
+    "03_powerbi/01_client_discovery.md",
+    "03_powerbi/02_data_sources.md",
+    "03_powerbi/03_data_model.md",
+    "03_powerbi/05_kpis_and_metrics.md",
+    "03_powerbi/06_design_and_layout.md",
+    "03_powerbi/07_build_and_interactivity.md",
+    "01_python/pandas_read_csv.md",
+    "02_sql/VS Code SQL Setup.md.md",
+    "02_sql/03_aggregations/HAVING.md",
+    "02_sql/03_aggregations/Introduction to Aggregation.md",
+    "02_sql/02_fundamentals/BETWEEN.md",
+    "02_sql/02_fundamentals/ORDER BY.md",
+    "Untitled.canvas",
+    "2026-04-14.md",
+    "02_sql/SQL - Map of Content.md",
+    "Welcome.md",
+    "02_sql/06_window_functions/LAG and LEAD.md",
+    "02_sql/06_window_functions/Window Frame.md",
+    "02_sql/06_window_functions/Aggregates in Window Functions.md"
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
+  "name": "card_away_winpct",
+  "position": {
+    "x": 310,
+    "y": 60,
+    "height": 100,
+    "width": 280,
+    "tabOrder": 6
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_game_results"
+                    }
+                  },
+                  "Property": "Away Win%"
+                }
+              },
+              "queryRef": "fact_game_results.Away Win%",
+              "nativeQueryRef": "Away Win%",
+              "active": true
+            }
+          ]
+        }
+      }
+    }
+  }
+}

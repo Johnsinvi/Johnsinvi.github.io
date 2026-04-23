@@ -1,0 +1,113 @@
+table dim_calendar
+	lineageTag: a1b2c3d4-aaaa-bbbb-cccc-000011112222
+
+	column Date
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: b2c3d4e5-aaaa-bbbb-cccc-000011112223
+		summarizeBy: none
+		sourceColumn: Date
+
+		variation Variation
+			isDefault
+			relationship: b9c14a69-4492-4b53-9534-78be6be8c00d
+			defaultHierarchy: LocalDateTable_b4cbb748-0b58-4bf4-b497-2cfba30a1b59.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: c3d4e5f6-aaaa-bbbb-cccc-000011112224
+		summarizeBy: sum
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month Number'
+		dataType: int64
+		formatString: 0
+		lineageTag: d4e5f6a7-aaaa-bbbb-cccc-000011112225
+		summarizeBy: sum
+		sourceColumn: Month Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month Name'
+		dataType: string
+		lineageTag: e5f6a7b8-aaaa-bbbb-cccc-000011112226
+		summarizeBy: none
+		sourceColumn: Month Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month Short'
+		dataType: string
+		lineageTag: f6a7b8c9-aaaa-bbbb-cccc-000011112227
+		summarizeBy: none
+		sourceColumn: Month Short
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month Year'
+		dataType: string
+		lineageTag: a7b8c9d0-aaaa-bbbb-cccc-000011112228
+		summarizeBy: none
+		sourceColumn: Month Year
+		sortByColumn: 'Month Sort'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Day of Week'
+		dataType: string
+		lineageTag: b8c9d0e1-aaaa-bbbb-cccc-000011112229
+		summarizeBy: none
+		sourceColumn: Day of Week
+
+		annotation SummarizationSetBy = Automatic
+
+	column Season
+		dataType: string
+		lineageTag: c9d0e1f2-aaaa-bbbb-cccc-000011112230
+		summarizeBy: none
+		sourceColumn: Season
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month Sort'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: c0d1e2f3-aaaa-bbbb-cccc-000011112231
+		summarizeBy: none
+		sourceColumn: Month Sort
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_calendar = m
+		mode: import
+		source =
+				let
+				    StartDate = #date(2025, 10, 1),
+				    EndDate = #date(2026, 4, 30),
+				    DayCount = Duration.Days(EndDate - StartDate) + 1,
+				    DateList = List.Dates(StartDate, DayCount, #duration(1, 0, 0, 0)),
+				    DateTable = Table.FromList(DateList, Splitter.SplitByNothing(), {"Date"}),
+				    TypedDate = Table.TransformColumnTypes(DateTable, {{"Date", type date}}),
+				    AddYear = Table.AddColumn(TypedDate, "Year", each Date.Year([Date]), Int64.Type),
+				    AddMonthNum = Table.AddColumn(AddYear, "Month Number", each Date.Month([Date]), Int64.Type),
+				    AddMonthName = Table.AddColumn(AddMonthNum, "Month Name", each Date.MonthName([Date]), type text),
+				    AddMonthShort = Table.AddColumn(AddMonthName, "Month Short", each Text.Start(Date.MonthName([Date]), 3), type text),
+				    AddMonthYear = Table.AddColumn(AddMonthShort, "Month Year", each
+				        Text.Start(Date.MonthName([Date]), 3) & " " & Text.From(Date.Year([Date])),
+				        type text),
+				    AddMonthSort = Table.AddColumn(AddMonthYear, "Month Sort", each Date.Year([Date]) * 100 + Date.Month([Date]), Int64.Type),
+				    AddDayOfWeek = Table.AddColumn(AddMonthSort, "Day of Week", each Date.DayOfWeekName([Date]), type text),
+				    AddSeason = Table.AddColumn(AddDayOfWeek, "Season", each "2025-26", type text)
+				in
+				    AddSeason
+
+	annotation PBI_ResultType = Table
+

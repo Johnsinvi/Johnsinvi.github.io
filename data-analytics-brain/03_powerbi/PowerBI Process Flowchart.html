@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Power BI Dashboard Process</title>
+<style>
+  :root { color-scheme: light; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: #F0F4F8;
+    color: #1E293B;
+    min-height: 100vh;
+    padding: 24px 16px 48px;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+  header h1 {
+    font-size: 1.55rem;
+    font-weight: 700;
+    color: #1E293B;
+    letter-spacing: -0.3px;
+  }
+  header p {
+    font-size: 0.85rem;
+    color: #64748B;
+    margin-top: 4px;
+  }
+
+  .pipeline {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    max-width: 740px;
+    margin: 0 auto;
+  }
+
+  .phase {
+    width: 100%;
+    background: #fff;
+    border-radius: 14px;
+    border: 2px solid transparent;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    cursor: pointer;
+    transition: box-shadow 0.2s, border-color 0.2s, transform 0.15s;
+    overflow: hidden;
+  }
+  .phase:hover { box-shadow: 0 6px 24px rgba(0,0,0,0.12); transform: translateY(-1px); }
+  .phase.open { border-color: var(--accent); box-shadow: 0 6px 24px rgba(0,0,0,0.13); }
+
+  .phase-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 20px;
+  }
+  .phase-badge {
+    width: 44px; height: 44px;
+    border-radius: 10px;
+    background: var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.35rem;
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.13);
+  }
+  .phase-meta { flex: 1; }
+  .phase-num { font-size: 0.7rem; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 0.8px; }
+  .phase-title { font-size: 1rem; font-weight: 700; color: #1E293B; line-height: 1.2; }
+  .phase-sub { font-size: 0.78rem; color: #64748B; margin-top: 2px; }
+  .phase-toggle { font-size: 1.1rem; color: #94A3B8; transition: transform 0.25s; flex-shrink: 0; user-select: none; }
+  .phase.open .phase-toggle { transform: rotate(180deg); }
+
+  .progress-bar-wrap { height: 4px; background: #E2E8F0; margin: 0 20px; }
+  .progress-bar-fill { height: 4px; background: var(--accent); border-radius: 2px; transition: width 0.4s; }
+
+  .phase-body { display: none; padding: 0 20px 18px; animation: fadeIn 0.2s ease; }
+  .phase.open .phase-body { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-4px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .checklist { list-style: none; margin-top: 14px; }
+  .checklist li {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 7px 0;
+    border-bottom: 1px solid #F1F5F9;
+    font-size: 0.83rem; color: #334155;
+    cursor: pointer; transition: color 0.15s;
+  }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li:hover { color: #1E293B; }
+  .check-box {
+    width: 18px; height: 18px; border-radius: 5px;
+    border: 2px solid #CBD5E1;
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.65rem; color: #fff;
+    transition: background 0.15s, border-color 0.15s;
+    margin-top: 1px;
+  }
+  .checklist li.checked .check-box { background: var(--accent); border-color: var(--accent); }
+  .checklist li.checked .check-box::after { content: '✓'; }
+  .checklist li.checked span { text-decoration: line-through; color: #94A3B8; }
+
+  .subtopics { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; margin-bottom: 4px; }
+  .tag {
+    font-size: 0.72rem; font-weight: 600;
+    padding: 3px 10px; border-radius: 20px;
+    background: var(--accent-light); color: var(--accent);
+    letter-spacing: 0.2px;
+  }
+  .progress-label { font-size: 0.72rem; color: #94A3B8; text-align: right; margin-top: 10px; }
+
+  .arrow {
+    display: flex; flex-direction: column; align-items: center;
+    height: 36px; flex-shrink: 0;
+  }
+  .arrow-line { width: 2px; flex: 1; background: #CBD5E1; }
+  .arrow-head {
+    width: 0; height: 0;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-top: 8px solid #CBD5E1;
+  }
+
+  .p1 { --accent:#2563EB; --accent-light:#EFF6FF; }
+  .p2 { --accent:#7C3AED; --accent-light:#F5F3FF; }
+  .p3 { --accent:#0891B2; --accent-light:#ECFEFF; }
+  .p4 { --accent:#D97706; --accent-light:#FFFBEB; }
+  .p5 { --accent:#DC2626; --accent-light:#FEF2F2; }
+  .p6 { --accent:#059669; --accent-light:#ECFDF5; }
+  .p7 { --accent:#DB2777; --accent-light:#FDF2F8; }
+
+  .summary-bar {
+    max-width: 740px; margin: 0 auto 28px;
+    background: #fff; border-radius: 12px; padding: 14px 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    display: flex; align-items: center; gap: 16px;
+  }
+  .summary-bar .label { font-size: 0.8rem; color: #64748B; white-space: nowrap; font-weight: 600; }
+  .summary-outer { flex: 1; height: 8px; background: #E2E8F0; border-radius: 4px; overflow: hidden; }
+  .summary-fill { height: 8px; background: linear-gradient(90deg,#2563EB,#DB2777); border-radius: 4px; transition: width 0.4s; }
+  .summary-pct { font-size: 0.8rem; font-weight: 700; color: #1E293B; white-space: nowrap; min-width: 36px; text-align: right; }
+  .reset-btn {
+    font-size: 0.72rem; padding: 4px 10px; border-radius: 6px;
+    border: 1px solid #E2E8F0; background: #F8FAFC; color: #64748B;
+    cursor: pointer; transition: background 0.15s; white-space: nowrap;
+  }
+  .reset-btn:hover { background: #E2E8F0; }
+
+  .open-all-btn {
+    font-size: 0.72rem; padding: 4px 10px; border-radius: 6px;
+    border: 1px solid #E2E8F0; background: #F8FAFC; color: #64748B;
+    cursor: pointer; transition: background 0.15s; white-space: nowrap;
+  }
+  .open-all-btn:hover { background: #E2E8F0; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>📊 Power BI Dashboard Creation Process</h1>
+  <p>Click any phase to expand · Check items as you complete them · Progress saves in your browser</p>
+</header>
+
+<div class="summary-bar">
+  <span class="label">Overall progress</span>
+  <div class="summary-outer"><div class="summary-fill" id="summaryFill" style="width:0%"></div></div>
+  <span class="summary-pct" id="summaryPct">0%</span>
+  <button class="open-all-btn" onclick="toggleAll()">Expand all</button>
+  <button class="reset-btn" onclick="resetAll()">Reset</button>
+</div>
+
+<div class="pipeline" id="pipeline"></div>
+
+<script>
+const phases = [
+  {
+    cls:'p1', icon:'🧭', num:'Phase 1', title:'Client Discovery',
+    sub:'Questions to ask · audience · data sources · constraints',
+    tags:['Business','Audience','Data','Constraints'],
+    items:[
+      'Identified the main business question the dashboard answers',
+      'Confirmed who the end users are and their technical level',
+      'Understood the update frequency needed',
+      'Listed all data sources mentioned by the client',
+      'Noted existing reports or references to replicate',
+      'Identified any access restrictions or sensitive fields',
+      'Agreed on a delivery timeline',
+    ]
+  },
+  {
+    cls:'p2', icon:'🗄️', num:'Phase 2', title:'Data Sources',
+    sub:'Connect · assess quality · clean in Power Query',
+    tags:['Import vs DirectQuery','Power Query','Data Quality'],
+    items:[
+      'Connected to all data sources successfully',
+      'Identified the grain (one row = one what?) of each table',
+      'Assessed null rates in key columns',
+      'Fixed data type issues (dates, numbers)',
+      'Standardized categorical values',
+      'Removed duplicates where needed',
+      'Renamed all columns to clean, readable names',
+      'Documented source, format, frequency, and owner for each table',
+      'Confirmed refresh schedule with client',
+    ]
+  },
+  {
+    cls:'p3', icon:'🧩', num:'Phase 3', title:'Data Model',
+    sub:'Star schema · primary keys · relationships · calendar table',
+    tags:['Star Schema','Fact & Dims','Relationships','Calendar'],
+    items:[
+      'Identified all fact tables and dimension tables',
+      'Verified primary key uniqueness in all dimension tables',
+      'All relationships set to many-to-one (fact side is "many")',
+      'Cross-filter direction is Single on all relationships',
+      'Calendar table created and marked as Date Table',
+      'Calendar table connected to all date columns in fact tables',
+      'Created a dedicated _Measures table (empty, for organization)',
+      'Model view is clean — no hidden tables creating confusion',
+      'No circular relationships',
+    ]
+  },
+  {
+    cls:'p4', icon:'🔢', num:'Phase 4', title:'DAX & Calculations',
+    sub:'Measures · time intelligence · calculated columns · parameters',
+    tags:['Base Measures','Time Intelligence','What-if Params'],
+    items:[
+      'Created _Measures table and stored all measures inside it',
+      'Built all base measures (sales, quantity, orders, customers)',
+      'Built time intelligence measures (LY, YoY, MTD, YTD)',
+      'All divisions use DIVIDE() not /',
+      'Verified measures return correct values against known totals',
+      'Calculated columns used only where row context is truly needed',
+      'Calendar table confirmed as Date Table before using time intelligence',
+      'Named all measures clearly and consistently (Title Case)',
+    ]
+  },
+  {
+    cls:'p5', icon:'🎯', num:'Phase 5', title:'KPIs & Metrics',
+    sub:'Define what to show · business questions · prioritization',
+    tags:['Business Questions','KPI Definition','Prioritization'],
+    items:[
+      'Listed every KPI/metric the client mentioned in discovery',
+      'Written the business question behind each one',
+      'Confirmed which DAX measures cover each KPI',
+      'Defined how each metric will be broken down (dimensions)',
+      'Identified any comparison needed (YoY, vs target, vs average)',
+      'Prioritized into must-have / should-have / nice-to-have',
+      'Decided which metrics go on which page',
+    ]
+  },
+  {
+    cls:'p6', icon:'🎨', num:'Phase 6', title:'Design & Layout',
+    sub:'Visual selection · grid · colors · typography · interaction plan',
+    tags:['Visual Types','Color Palette','Layout Grid','Interactivity'],
+    items:[
+      'Sketched layout for each page on paper or in Figma/Miro',
+      'Named and defined each page (purpose, audience, main question)',
+      'Selected the visual type for each metric',
+      'Defined color palette and documented hex codes',
+      'Decided typography sizes for title, KPI, chart, table',
+      'Planned slicer/filter placement',
+      'Documented all interactive behaviors (cross-filter, drill-through, bookmarks)',
+      'Identified any custom tooltip pages needed',
+    ]
+  },
+  {
+    cls:'p7', icon:'⚙️', num:'Phase 7', title:'Build & Interactivity',
+    sub:'Create visuals · bookmarks · drill-through · navigation · polish',
+    tags:['Visuals','Bookmarks','Drill-through','Tooltips','Navigation'],
+    items:[
+      'Canvas size and background set',
+      'Header (title, logo, navigation bar) placed',
+      'All KPI cards built and formatted',
+      'All charts built with correct measures and dimensions',
+      'Data colors set explicitly on all visuals',
+      'Visual titles are descriptive (not just "Sum of Sales")',
+      'Edit Interactions configured — no unintended cross-filtering',
+      'Bookmarks created for all toggle views',
+      'All buttons have all three states styled (Default, Hover, Pressed)',
+      'Page navigation buttons working',
+      'Drill-through pages built with Back buttons',
+      'Custom tooltip pages built and assigned',
+    ]
+  }
+];
+
+const STATE_KEY = 'pbi_process_v1';
+let state = {};
+try { state = JSON.parse(localStorage.getItem(STATE_KEY) || '{}'); } catch(e) {}
+
+function save() { try { localStorage.setItem(STATE_KEY, JSON.stringify(state)); } catch(e) {} }
+function getChecked(i) { return state[i] || []; }
+
+function toggleItem(phaseIdx, itemIdx) {
+  const arr = getChecked(phaseIdx);
+  const pos = arr.indexOf(itemIdx);
+  if (pos === -1) arr.push(itemIdx); else arr.splice(pos, 1);
+  state[phaseIdx] = arr;
+  save();
+  renderPhaseBody(phaseIdx);
+  updateSummary();
+}
+
+function totalItems() { return phases.reduce((s,p) => s + p.items.length, 0); }
+function totalChecked() {
+  let n = 0;
+  phases.forEach((_,i) => { n += getChecked(i).length; });
+  return n;
+}
+
+function updateSummary() {
+  const pct = Math.round(totalChecked() / totalItems() * 100);
+  document.getElementById('summaryFill').style.width = pct + '%';
+  document.getElementById('summaryPct').textContent = pct + '%';
+}
+
+function resetAll() {
+  if (!confirm('Reset all checklist progress?')) return;
+  state = {}; save();
+  phases.forEach((_,i) => renderPhaseBody(i));
+  updateSummary();
+}
+
+let allOpen = false;
+function toggleAll() {
+  allOpen = !allOpen;
+  phases.forEach((_,i) => {
+    const el = document.getElementById('phase-' + i);
+    if (allOpen) el.classList.add('open'); else el.classList.remove('open');
+  });
+  document.querySelector('.open-all-btn').textContent = allOpen ? 'Collapse all' : 'Expand all';
+}
+
+function renderPhaseBody(idx) {
+  const p = phases[idx];
+  const checked = getChecked(idx);
+  const pct = Math.round(checked.length / p.items.length * 100);
+  document.getElementById('bar-' + idx).style.width = pct + '%';
+  const tagsHtml = p.tags.map(t => `<span class="tag">${t}</span>`).join('');
+  const listHtml = p.items.map((item, ii) => {
+    const done = checked.includes(ii);
+    return `<li class="${done ? 'checked' : ''}" onclick="toggleItem(${idx},${ii})">
+      <div class="check-box"></div><span>${item}</span>
+    </li>`;
+  }).join('');
+  document.getElementById('body-' + idx).innerHTML = `
+    <div class="subtopics">${tagsHtml}</div>
+    <ul class="checklist">${listHtml}</ul>
+    <div class="progress-label">${checked.length} / ${p.items.length} complete (${pct}%)</div>
+  `;
+}
+
+function buildPipeline() {
+  const container = document.getElementById('pipeline');
+  phases.forEach((p, i) => {
+    const div = document.createElement('div');
+    div.className = `phase ${p.cls}`;
+    div.id = 'phase-' + i;
+    div.innerHTML = `
+      <div class="phase-header" onclick="togglePhase(${i})">
+        <div class="phase-badge">${p.icon}</div>
+        <div class="phase-meta">
+          <div class="phase-num">${p.num}</div>
+          <div class="phase-title">${p.title}</div>
+          <div class="phase-sub">${p.sub}</div>
+        </div>
+        <div class="phase-toggle">▼</div>
+      </div>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" id="bar-${i}" style="width:0%"></div>
+      </div>
+      <div class="phase-body" id="body-${i}"></div>
+    `;
+    container.appendChild(div);
+    renderPhaseBody(i);
+
+    if (i < phases.length - 1) {
+      const arrow = document.createElement('div');
+      arrow.className = 'arrow';
+      arrow.innerHTML = `<div class="arrow-line"></div><div class="arrow-head"></div>`;
+      container.appendChild(arrow);
+    }
+  });
+}
+
+function togglePhase(idx) {
+  document.getElementById('phase-' + idx).classList.toggle('open');
+}
+
+buildPipeline();
+updateSummary();
+</script>
+</body>
+</html>

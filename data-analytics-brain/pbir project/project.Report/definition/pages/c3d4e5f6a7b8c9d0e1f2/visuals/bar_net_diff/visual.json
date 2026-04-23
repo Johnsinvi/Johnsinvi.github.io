@@ -1,0 +1,73 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
+  "name": "bar_net_diff",
+  "position": {
+    "x": 800,
+    "y": 60,
+    "height": 310,
+    "width": 460,
+    "tabOrder": 6
+  },
+  "visual": {
+    "visualType": "barChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_teams"
+                    }
+                  },
+                  "Property": "Team Name"
+                }
+              },
+              "queryRef": "dim_teams.Team Name",
+              "nativeQueryRef": "Team Name",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_game_results"
+                    }
+                  },
+                  "Property": "Net Point Diff"
+                }
+              },
+              "queryRef": "fact_game_results.Net Point Diff",
+              "nativeQueryRef": "Net Point Diff"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "fact_game_results"
+                  }
+                },
+                "Property": "Net Point Diff"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    }
+  }
+}

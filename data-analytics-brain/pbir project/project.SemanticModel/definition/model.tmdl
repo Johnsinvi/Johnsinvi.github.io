@@ -1,0 +1,22 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_ProTooling = ["DevMode"]
+
+annotation PBI_QueryOrder = ["fact_game_results","dim_teams","dim_calendar"]
+
+ref table fact_game_results
+ref table dim_teams
+ref table dim_calendar
+ref table DateTableTemplate_acd6822d-b096-444b-ba97-56917bbd2b8d
+ref table LocalDateTable_b4cbb748-0b58-4bf4-b497-2cfba30a1b59
+
+ref cultureInfo en-US
+

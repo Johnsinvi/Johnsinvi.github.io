@@ -1,0 +1,13 @@
+relationship fact_game_results_dim_teams
+	fromColumn: fact_game_results.team_id
+	toColumn: dim_teams.Team
+
+relationship fact_game_results_dim_calendar
+	fromColumn: fact_game_results.Date
+	toColumn: dim_calendar.Date
+
+relationship b9c14a69-4492-4b53-9534-78be6be8c00d
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dim_calendar.Date
+	toColumn: LocalDateTable_b4cbb748-0b58-4bf4-b497-2cfba30a1b59.Date
+

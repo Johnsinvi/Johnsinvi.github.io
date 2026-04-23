@@ -1,0 +1,64 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
+  "name": "table_close_games",
+  "position": {
+    "x": 800,
+    "y": 382,
+    "height": 314,
+    "width": 460,
+    "tabOrder": 7
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_teams"
+                    }
+                  },
+                  "Property": "Team Name"
+                }
+              },
+              "queryRef": "dim_teams.Team Name",
+              "nativeQueryRef": "Team Name"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_game_results"
+                    }
+                  },
+                  "Property": "Close Games"
+                }
+              },
+              "queryRef": "fact_game_results.Close Games",
+              "nativeQueryRef": "Close Games"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_game_results"
+                    }
+                  },
+                  "Property": "Close Game Win%"
+                }
+              },
+              "queryRef": "fact_game_results.Close Game Win%",
+              "nativeQueryRef": "Close Game Win%"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

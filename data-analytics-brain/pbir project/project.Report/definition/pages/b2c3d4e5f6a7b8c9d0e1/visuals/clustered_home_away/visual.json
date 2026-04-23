@@ -1,0 +1,87 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
+  "name": "clustered_home_away",
+  "position": {
+    "x": 20,
+    "y": 176,
+    "height": 520,
+    "width": 760,
+    "tabOrder": 8
+  },
+  "visual": {
+    "visualType": "clusteredBarChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_teams"
+                    }
+                  },
+                  "Property": "Team Name"
+                }
+              },
+              "queryRef": "dim_teams.Team Name",
+              "nativeQueryRef": "Team Name",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_game_results"
+                    }
+                  },
+                  "Property": "Home Win%"
+                }
+              },
+              "queryRef": "fact_game_results.Home Win%",
+              "nativeQueryRef": "Home Win%"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_game_results"
+                    }
+                  },
+                  "Property": "Away Win%"
+                }
+              },
+              "queryRef": "fact_game_results.Away Win%",
+              "nativeQueryRef": "Away Win%"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "fact_game_results"
+                  }
+                },
+                "Property": "Home Advantage"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    }
+  }
+}

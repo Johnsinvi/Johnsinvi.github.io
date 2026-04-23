@@ -1,0 +1,92 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
+  "name": "scatter_point_diff",
+  "position": {
+    "x": 800,
+    "y": 176,
+    "height": 520,
+    "width": 460,
+    "tabOrder": 9
+  },
+  "visual": {
+    "visualType": "scatterChart",
+    "query": {
+      "queryState": {
+        "Details": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_teams"
+                    }
+                  },
+                  "Property": "Team Name"
+                }
+              },
+              "queryRef": "dim_teams.Team Name",
+              "nativeQueryRef": "Team Name",
+              "active": true
+            }
+          ]
+        },
+        "Series": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_teams"
+                    }
+                  },
+                  "Property": "Team Name"
+                }
+              },
+              "queryRef": "dim_teams.Team Name",
+              "nativeQueryRef": "Team Name"
+            }
+          ]
+        },
+        "X": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_game_results"
+                    }
+                  },
+                  "Property": "Avg Home Point Diff"
+                }
+              },
+              "queryRef": "fact_game_results.Avg Home Point Diff",
+              "nativeQueryRef": "Avg Home Point Diff",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_game_results"
+                    }
+                  },
+                  "Property": "Avg Away Point Diff"
+                }
+              },
+              "queryRef": "fact_game_results.Avg Away Point Diff",
+              "nativeQueryRef": "Avg Away Point Diff"
+            }
+          ]
+        }
+      }
+    }
+  }
+}
