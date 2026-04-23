@@ -3,9 +3,9 @@
   "name": "card_home_winpct",
   "position": {
     "x": 20,
-    "y": 56,
-    "height": 104,
-    "width": 400,
+    "y": 60,
+    "height": 100,
+    "width": 280,
     "tabOrder": 5
   },
   "visual": {
