@@ -9,6 +9,45 @@
     "tabOrder": 0
   },
   "visual": {
-    "visualType": "basicShape"
+    "visualType": "basicShape",
+    "objects": {
+      "fill": [
+        {
+          "properties": {
+            "fillColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#F5EDD8'"
+                    }
+                  }
+                }
+              }
+            },
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "0"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "line": [
+        {
+          "properties": {
+            "weight": {
+              "expr": {
+                "Literal": {
+                  "Value": "0"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
   }
 }
