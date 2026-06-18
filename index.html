@@ -236,6 +236,13 @@
       color: var(--faint);
     }
 
+    .project-card:hover { border-color: #2c2c2c; }
+
+    .project-link {
+      display: inline-block;
+      margin-top: 1.1rem;
+    }
+
     iframe {
       display: block;
       width: 100%;
@@ -328,6 +335,29 @@
       <h2 class="section-head">Selected work</h2>
 
       <div class="projects">
+
+        <!-- Project: US energy SQL analysis (GitHub) -->
+        <article class="project-card">
+          <div class="project-head">
+            <p class="project-label">SQL | Data Modeling</p>
+            <h3>US Electricity Generation: a SQL Analysis (1990-2024)</h3>
+            <p class="desc">
+              A star-schema project on 35 years of US energy data from the EIA:
+              ETL and data validation in Python, then analytical SQL with JOINs,
+              CTEs, and window functions. Finds that natural gas now supplies 43%
+              of US power and leads 28 states, while coal has fallen about 59%
+              since 1990.
+            </p>
+            <div class="project-tech">
+              <span>SQL</span>
+              <span>SQLite</span>
+              <span>Window Functions</span>
+              <span>Data Modeling</span>
+              <span>Python</span>
+            </div>
+            <a class="btn btn-ghost project-link" href="https://github.com/Johnsinvi/us-electricity-sql-analysis" target="_blank" rel="noopener">View on GitHub</a>
+          </div>
+        </article>
 
         <!-- Project: NBA dashboard (live Power BI) -->
         <article class="project-card">
