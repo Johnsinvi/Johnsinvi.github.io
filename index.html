@@ -3,97 +3,237 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>John Pereyra — Data Analytics</title>
+  <title>Clear Data Report | Data Analytics Portfolio</title>
+  <meta name="description" content="Clear Data Report - a portfolio of data analytics work: Power BI dashboards and SQL analyses on energy and product data." />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    :root {
+      --bg: #0d0d0d;
+      --bg-card: #111;
+      --border: #1f1f1f;
+      --text: #e0e0e0;
+      --muted: #777;
+      --faint: #555;
+      --white: #ffffff;
+      --accent: #f47c3c;
+    }
+
+    html { scroll-behavior: smooth; }
+
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background: #0d0d0d;
-      color: #e0e0e0;
+      background: var(--bg);
+      color: var(--text);
       min-height: 100vh;
+      line-height: 1.5;
       display: flex;
       flex-direction: column;
     }
 
+    /* ---------- Header ---------- */
     header {
-      padding: 1.75rem 2.5rem;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      padding: 1.25rem 2.5rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-bottom: 1px solid #1f1f1f;
+      border-bottom: 1px solid var(--border);
+      background: rgba(13, 13, 13, 0.85);
+      backdrop-filter: blur(8px);
     }
 
-    header h1 {
+    header .brand {
       font-size: 1rem;
       font-weight: 600;
       letter-spacing: 0.02em;
-      color: #ffffff;
+      color: var(--white);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+    }
+
+    header .brand .mark {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    header nav {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
     }
 
     header nav a {
-      color: #666;
+      color: var(--muted);
       text-decoration: none;
       font-size: 0.875rem;
       transition: color 0.2s;
     }
 
-    header nav a:hover { color: #ffffff; }
+    header nav a:hover { color: var(--white); }
 
+    /* ---------- Layout ---------- */
     main {
       flex: 1;
-      display: flex;
-      flex-direction: column;
-      padding: 3rem 2.5rem 2rem;
-      max-width: 1160px;
       width: 100%;
+      max-width: 1160px;
       margin: 0 auto;
-      gap: 1.75rem;
+      padding: 4rem 2.5rem 2rem;
     }
 
-    .hero h2 {
-      font-size: 1.75rem;
+    section { margin-bottom: 4.5rem; }
+
+    .eyebrow {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    /* ---------- Hero ---------- */
+    .hero h1 {
+      font-size: 2.6rem;
       font-weight: 700;
-      color: #ffffff;
-      line-height: 1.2;
-      margin-bottom: 0.4rem;
+      color: var(--white);
+      line-height: 1.12;
+      max-width: 740px;
+      margin-bottom: 1rem;
     }
 
     .hero p {
-      font-size: 0.9rem;
-      color: #555;
-      max-width: 500px;
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 620px;
+      margin-bottom: 2rem;
     }
 
-    .dashboard-wrapper {
-      background: #111;
-      border: 1px solid #1f1f1f;
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 2.25rem;
+    }
+
+    .btn {
+      font-size: 0.875rem;
+      font-weight: 500;
+      text-decoration: none;
+      padding: 0.6rem 1.1rem;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #0d0d0d;
+      font-weight: 600;
+    }
+
+    .btn-primary:hover { filter: brightness(1.1); }
+
+    .btn-ghost {
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+
+    .btn-ghost:hover { border-color: var(--faint); color: var(--white); }
+
+    /* ---------- Skills ---------- */
+    .skills-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .tag {
+      font-size: 0.8rem;
+      padding: 0.3rem 0.7rem;
+      border-radius: 4px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    /* ---------- Section heading ---------- */
+    .section-head {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 1.5rem;
+    }
+
+    /* ---------- Projects ---------- */
+    .projects {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .project-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
       border-radius: 8px;
       overflow: hidden;
     }
 
-    .dashboard-label {
-      padding: 0.875rem 1.25rem;
-      border-bottom: 1px solid #1f1f1f;
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
+    .project-head {
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid var(--border);
     }
 
-    .dashboard-label span {
-      font-size: 0.75rem;
+    .project-label {
+      font-size: 0.72rem;
       font-weight: 600;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: #444;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.6rem;
     }
 
-    .dot {
+    .project-label .live {
       width: 7px;
       height: 7px;
       border-radius: 50%;
-      background: #f47c3c;
-      flex-shrink: 0;
+      background: var(--accent);
+    }
+
+    .project-card h3 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 0.4rem;
+    }
+
+    .project-card .desc {
+      font-size: 0.9rem;
+      color: var(--muted);
+      max-width: 720px;
+      margin-bottom: 0.9rem;
+    }
+
+    .project-tech {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .project-tech span {
+      font-size: 0.72rem;
+      padding: 0.2rem 0.55rem;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      color: var(--faint);
     }
 
     iframe {
@@ -103,21 +243,46 @@
       border: none;
     }
 
-    footer {
-      text-align: center;
-      padding: 1.25rem;
-      font-size: 0.75rem;
-      color: #2e2e2e;
-      border-top: 1px solid #161616;
+    /* ---------- Contact ---------- */
+    .contact p {
+      font-size: 0.95rem;
+      color: var(--muted);
+      max-width: 560px;
+      margin-bottom: 1.5rem;
     }
 
-    footer a { color: #383838; text-decoration: none; transition: color 0.2s; }
-    footer a:hover { color: #666; }
+    /* ---------- Footer ---------- */
+    footer {
+      text-align: center;
+      padding: 2rem 1.25rem;
+      font-size: 0.8rem;
+      color: var(--faint);
+      border-top: 1px solid var(--border);
+    }
 
-    @media (max-width: 640px) {
-      header { padding: 1.25rem; }
-      main { padding: 2rem 1.25rem 1rem; }
-      .hero h2 { font-size: 1.3rem; }
+    footer .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 0.9rem;
+      flex-wrap: wrap;
+    }
+
+    footer .footer-links a {
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    footer .footer-links a:hover { color: var(--white); }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 760px) {
+      header { padding: 1rem 1.25rem; }
+      header nav { gap: 1rem; }
+      header nav .hide-sm { display: none; }
+      main { padding: 2.75rem 1.25rem 1rem; }
+      .hero h1 { font-size: 1.95rem; }
       iframe { height: 480px; }
     }
   </style>
@@ -125,33 +290,94 @@
 <body>
 
   <header>
-    <h1>John Pereyra</h1>
+    <a href="#top" class="brand"><span class="mark"></span>Clear Data Report</a>
     <nav>
-      <a href="https://www.linkedin.com/in/john-pereyra-483a23109" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="#work">Work</a>
+      <a href="#contact">Contact</a>
+      <a href="https://github.com/Johnsinvi" target="_blank" rel="noopener">GitHub</a>
     </nav>
   </header>
 
-  <main>
-    <div class="hero">
-      <h2>NBA Team Performance Dashboard</h2>
-      <p>Interactive analysis of NBA team stats — win rates, scoring trends, and home/away breakdowns.</p>
-    </div>
+  <main id="top">
 
-    <div class="dashboard-wrapper">
-      <div class="dashboard-label">
-        <div class="dot"></div>
-        <span>Power BI · Live</span>
+    <!-- ===== Hero ===== -->
+    <section class="hero">
+      <p class="eyebrow">Data Analytics Portfolio</p>
+      <h1>Turning raw data into clear decisions.</h1>
+      <p>
+        A growing collection of dashboards and SQL analyses, focused on
+        energy and product data. Built with Power BI, SQL, and Python.
+      </p>
+
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#work">View work</a>
+        <a class="btn btn-ghost" href="https://github.com/Johnsinvi" target="_blank" rel="noopener">GitHub</a>
       </div>
-      <iframe
-        title="NBA Team Performance Dashboard"
-        src="https://app.powerbi.com/view?r=eyJrIjoiYzNkMTBlZWQtMzczNS00ZTIyLWIzZTgtY2I4NTEyYjA3YTI4IiwidCI6IjVkNjE0ZDU2LWJiYjItNGZlNC1iOTI2LWFlNTQzMjdkYjcyMiIsImMiOjR9"
-        allowFullScreen
-      ></iframe>
-    </div>
+
+      <div class="skills-row">
+        <span class="tag">Power BI</span>
+        <span class="tag">DAX</span>
+        <span class="tag">SQL</span>
+        <span class="tag">Python</span>
+        <span class="tag">Data Modeling</span>
+      </div>
+    </section>
+
+    <!-- ===== Work ===== -->
+    <section id="work">
+      <h2 class="section-head">Selected work</h2>
+
+      <div class="projects">
+
+        <!-- Project: NBA dashboard (live Power BI) -->
+        <article class="project-card">
+          <div class="project-head">
+            <p class="project-label"><span class="live"></span>Power BI | Live</p>
+            <h3>NBA Team Performance Dashboard</h3>
+            <p class="desc">
+              Interactive analysis of NBA team stats: win rates, scoring trends, and
+              home/away breakdowns. Built on a star-schema data model with DAX measures
+              and a single-page, filterable report layout.
+            </p>
+            <div class="project-tech">
+              <span>Power BI</span>
+              <span>DAX</span>
+              <span>Data Modeling</span>
+            </div>
+          </div>
+          <iframe
+            title="NBA Team Performance Dashboard"
+            src="https://app.powerbi.com/view?r=eyJrIjoiYzNkMTBlZWQtMzczNS00ZTIyLWIzZTgtY2I4NTEyYjA3YTI4IiwidCI6IjVkNjE0ZDU2LWJiYjItNGZlNC1iOTI2LWFlNTQzMjdkYjcyMiIsImMiOjR9"
+            allowFullScreen
+          ></iframe>
+        </article>
+
+        <!-- Add the next project cards here (US energy: SQL analysis, then Power BI). -->
+
+      </div>
+    </section>
+
+    <!-- ===== Contact ===== -->
+    <section id="contact" class="contact">
+      <h2 class="section-head">Contact</h2>
+      <p>
+        Open to remote data work. The fastest way to reach me is LinkedIn or email.
+      </p>
+      <div class="cta-row">
+        <a class="btn btn-ghost" href="https://www.linkedin.com/in/johndpereyra" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="btn btn-ghost" href="mailto:johnd.pereyra@gmail.com">Email</a>
+      </div>
+    </section>
+
   </main>
 
   <footer>
-    <a href="https://cleardatareport.com">cleardatareport.com</a>
+    <div class="footer-links">
+      <a href="https://www.linkedin.com/in/johndpereyra" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://github.com/Johnsinvi" target="_blank" rel="noopener">GitHub</a>
+      <a href="mailto:johnd.pereyra@gmail.com">Email</a>
+    </div>
+    <div>cleardatareport.com | Built by John Pereyra</div>
   </footer>
 
 </body>
