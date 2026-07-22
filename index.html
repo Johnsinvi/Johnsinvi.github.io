@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Clear Data Report | Data Analytics Portfolio</title>
-  <meta name="description" content="Clear Data Report - a portfolio of data analytics work: Power BI dashboards and SQL analyses on energy and product data." />
+  <meta name="description" content="Clear Data Report - a portfolio of interactive dashboards built with Power BI, Excel, and Python on public energy and finance data." />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -312,8 +312,8 @@
       <p class="eyebrow">Data Analytics Portfolio</p>
       <h1>Turning raw data into clear decisions.</h1>
       <p>
-        A growing collection of dashboards and SQL analyses, focused on
-        energy and product data. Built with Power BI, SQL, and Python.
+        A collection of interactive dashboards, each built in a different tool,
+        on public energy and finance data. Built with Power BI, Excel, and Python.
       </p>
 
       <div class="cta-row">
@@ -323,9 +323,10 @@
 
       <div class="skills-row">
         <span class="tag">Power BI</span>
+        <span class="tag">Excel</span>
+        <span class="tag">Python</span>
         <span class="tag">DAX</span>
         <span class="tag">SQL</span>
-        <span class="tag">Python</span>
         <span class="tag">Data Modeling</span>
       </div>
     </section>
@@ -335,29 +336,6 @@
       <h2 class="section-head">Selected work</h2>
 
       <div class="projects">
-
-        <!-- Project: US energy SQL analysis (GitHub) -->
-        <article class="project-card">
-          <div class="project-head">
-            <p class="project-label">SQL | Data Modeling</p>
-            <h3>US Electricity Generation: a SQL Analysis (1990-2024)</h3>
-            <p class="desc">
-              A star-schema project on 35 years of US energy data from the EIA:
-              ETL and data validation in Python, then analytical SQL with JOINs,
-              CTEs, and window functions. Finds that natural gas now supplies 43%
-              of US power and leads 28 states, while coal has fallen about 59%
-              since 1990.
-            </p>
-            <div class="project-tech">
-              <span>SQL</span>
-              <span>SQLite</span>
-              <span>Window Functions</span>
-              <span>Data Modeling</span>
-              <span>Python</span>
-            </div>
-            <a class="btn btn-ghost project-link" href="https://github.com/Johnsinvi/us-electricity-sql-analysis" target="_blank" rel="noopener">View on GitHub</a>
-          </div>
-        </article>
 
         <!-- Project: US mineral production Power BI dashboard (live) -->
         <article class="project-card">
@@ -383,6 +361,62 @@
           <iframe
             title="US Mineral Production and Import Dependence dashboard"
             src="https://app.powerbi.com/view?r=eyJrIjoiZDQzMzk5MjYtZjk3Ny00Zjc3LWI2MjgtNWY5ZGJlNDllNjk2IiwidCI6IjVkNjE0ZDU2LWJiYjItNGZlNC1iOTI2LWFlNTQzMjdkYjcyMiIsImMiOjR9"
+            allowFullScreen
+          ></iframe>
+        </article>
+
+        <!-- Project: US bank health Python dashboard (live) -->
+        <article class="project-card">
+          <div class="project-head">
+            <p class="project-label"><span class="live"></span>Python | Live</p>
+            <h3>US Bank Health Scorecard</h3>
+            <p class="desc">
+              A quarterly health scorecard for the 20 largest US banks, built as
+              one reproducible Python pipeline on public FDIC data. A single run
+              produces both this interactive dashboard (pandas and Plotly) and a
+              styled Excel scorecard - Python automating Excel, not replacing it.
+              It tracks six core banking KPIs; the 2020 credit shock and the
+              2022-23 rate cycle both show up clearly in the trends.
+            </p>
+            <div class="project-tech">
+              <span>Python</span>
+              <span>pandas</span>
+              <span>Plotly</span>
+              <span>openpyxl</span>
+              <span>FDIC API</span>
+            </div>
+            <a class="btn btn-ghost project-link" href="https://github.com/Johnsinvi/us-bank-health-python-dashboard" target="_blank" rel="noopener">View on GitHub</a>
+          </div>
+          <iframe
+            title="US Bank Health Scorecard dashboard"
+            src="bank-scorecard/index.html"
+            allowFullScreen
+          ></iframe>
+        </article>
+
+        <!-- Project: US oil & gas Excel dashboard (live) -->
+        <article class="project-card">
+          <div class="project-head">
+            <p class="project-label"><span class="live"></span>Excel | Live</p>
+            <h3>US Oil &amp; Gas Production by State</h3>
+            <p class="desc">
+              An interactive dashboard built entirely in native Excel on EIA
+              production data (2000-2026): Power Query ETL, a Power Pivot data
+              model with DAX measures, and slicer-driven charts with linked KPI
+              cards - the full BI stack inside one workbook, no add-ins. Texas
+              alone accounts for 42% of state-level US crude output.
+            </p>
+            <div class="project-tech">
+              <span>Excel</span>
+              <span>Power Query</span>
+              <span>Power Pivot</span>
+              <span>DAX</span>
+            </div>
+            <a class="btn btn-ghost project-link" href="https://github.com/Johnsinvi/us-oil-gas-excel-dashboard" target="_blank" rel="noopener">View on GitHub</a>
+          </div>
+          <iframe
+            title="US Oil and Gas Production by State dashboard"
+            src="https://1drv.ms/x/c/8b9dce2adebd1c92/IQQADEfxgzU7QpBGP6b-vtZeAX0a1bPmk8zwePT5af32Iqc"
             allowFullScreen
           ></iframe>
         </article>
