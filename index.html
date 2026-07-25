@@ -158,7 +158,11 @@
       background: var(--hero-panel);
       border-radius: 30px;
       box-shadow: var(--sh-hero-panel);
+      overflow: hidden;
     }
+    /* Panel artwork: raw values -> empty tables -> a finished report, left to right.
+       Anchored right and faded out to the left so the headline keeps a clean field. */
+    .hero-art { position: absolute; inset: 0; width: 100%; height: 100%; }
     .hero-inner { position: relative; z-index: 1; }
     .hero h1 {
       font-size: 3.4rem; font-weight: 600; letter-spacing: -0.022em;
@@ -213,7 +217,6 @@
     .work-head .eyebrow { margin-bottom: 0.7rem; display: block; }
     .work-title-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem; }
     .work-head h2 { font-size: 1.9rem; font-weight: 600; letter-spacing: -0.01em; color: var(--ink); }
-    .work-head .sub { font-size: 0.9rem; color: var(--secondary); padding-bottom: 0.25rem; }
 
     .projects { display: flex; flex-direction: column; gap: 2.6rem; }
 
@@ -321,7 +324,116 @@
 
     <!-- ===== Hero ===== -->
     <section class="hero">
-      <div class="hero-panel" aria-hidden="true"></div>
+      <div class="hero-panel" aria-hidden="true">
+        <svg class="hero-art" viewBox="0 0 1200 360" preserveAspectRatio="xMaxYMid slice" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <!-- claret wash, strongest at the right edge, gone before the headline -->
+            <linearGradient id="wash" gradientUnits="userSpaceOnUse" x1="360" y1="0" x2="1200" y2="0">
+              <stop offset="0" stop-color="#8A2B34" stop-opacity="0" />
+              <stop offset="0.45" stop-color="#8A2B34" stop-opacity="0.06" />
+              <stop offset="0.75" stop-color="#8A2B34" stop-opacity="0.15" />
+              <stop offset="1" stop-color="#8A2B34" stop-opacity="0.26" />
+            </linearGradient>
+            <linearGradient id="fadeGrad" gradientUnits="userSpaceOnUse" x1="300" y1="0" x2="900" y2="0">
+              <stop offset="0" stop-color="#000000" />
+              <stop offset="1" stop-color="#ffffff" />
+            </linearGradient>
+            <mask id="fadeLeft">
+              <rect x="0" y="0" width="1200" height="360" fill="url(#fadeGrad)" />
+            </mask>
+          </defs>
+
+          <rect x="0" y="0" width="1200" height="360" fill="url(#wash)" />
+
+          <g mask="url(#fadeLeft)">
+
+            <!-- 1. loose values floating in -->
+            <g fill="#8A2B34" font-family="IBM Plex Sans, sans-serif" font-weight="600">
+              <text x="398" y="152" font-size="26" opacity="0.34" transform="rotate(-6 398 152)">7</text>
+              <text x="450" y="100" font-size="22" opacity="0.30">%</text>
+              <text x="496" y="182" font-size="20" opacity="0.26">3.14</text>
+              <text x="542" y="124" font-size="24" opacity="0.36" transform="rotate(7 542 124)">0</text>
+              <text x="588" y="170" font-size="22" opacity="0.34">A</text>
+              <text x="630" y="106" font-size="26" opacity="0.40" transform="rotate(-5 630 106)">$</text>
+              <text x="670" y="156" font-size="22" opacity="0.42">42</text>
+              <text x="706" y="116" font-size="24" opacity="0.44">=</text>
+              <text x="742" y="150" font-size="22" opacity="0.46" transform="rotate(6 742 150)">x</text>
+              <text x="748" y="98" font-size="20" opacity="0.38">8</text>
+
+              <text x="418" y="270" font-size="24" opacity="0.30" transform="rotate(5 418 270)">5</text>
+              <text x="466" y="232" font-size="20" opacity="0.28">#</text>
+              <text x="510" y="300" font-size="22" opacity="0.30">1</text>
+              <text x="556" y="250" font-size="24" opacity="0.34" transform="rotate(-6 556 250)">B</text>
+              <text x="600" y="302" font-size="22" opacity="0.36">9</text>
+              <text x="644" y="256" font-size="24" opacity="0.38">+</text>
+              <text x="686" y="300" font-size="22" opacity="0.40">6</text>
+              <text x="724" y="264" font-size="24" opacity="0.44" transform="rotate(5 724 264)">%</text>
+              <text x="762" y="302" font-size="22" opacity="0.42">2</text>
+              <text x="772" y="258" font-size="20" opacity="0.40">/</text>
+            </g>
+
+            <!-- flow lines: values into the tables, tables into the report -->
+            <g fill="none" stroke="#8A2B34" stroke-opacity="0.22" stroke-width="2"
+               stroke-dasharray="4 7" stroke-linecap="round">
+              <path d="M 452 168 Q 610 128 766 118" />
+              <path d="M 690 96 Q 736 104 766 138" />
+              <path d="M 500 288 Q 656 304 794 278" />
+              <path d="M 961 118 Q 992 142 1011 168" />
+              <path d="M 989 258 Q 1002 220 1011 192" />
+            </g>
+
+            <!-- 2. two empty tables -->
+            <g>
+              <rect x="777" y="56" width="185" height="122" rx="9" fill="#8A2B34" opacity="0.10" />
+              <rect x="772" y="50" width="185" height="122" rx="9" fill="#FBF9F5" opacity="0.92" />
+              <rect x="772" y="50" width="185" height="122" rx="9" fill="none" stroke="#8A2B34" stroke-opacity="0.38" />
+              <rect x="772" y="50" width="185" height="26" rx="9" fill="#8A2B34" opacity="0.18" />
+              <rect x="772" y="67" width="185" height="9" fill="#8A2B34" opacity="0.18" />
+              <g stroke="#8A2B34" stroke-opacity="0.22">
+                <path d="M 833.7 76 V 172 M 895.3 76 V 172" />
+                <path d="M 772 100 H 957 M 772 124 H 957 M 772 148 H 957" />
+              </g>
+
+              <rect x="805" y="204" width="185" height="122" rx="9" fill="#8A2B34" opacity="0.10" />
+              <rect x="800" y="198" width="185" height="122" rx="9" fill="#FBF9F5" opacity="0.92" />
+              <rect x="800" y="198" width="185" height="122" rx="9" fill="none" stroke="#8A2B34" stroke-opacity="0.38" />
+              <rect x="800" y="198" width="185" height="26" rx="9" fill="#8A2B34" opacity="0.18" />
+              <rect x="800" y="215" width="185" height="9" fill="#8A2B34" opacity="0.18" />
+              <g stroke="#8A2B34" stroke-opacity="0.22">
+                <path d="M 861.7 224 V 320 M 923.3 224 V 320" />
+                <path d="M 800 248 H 985 M 800 272 H 985 M 800 296 H 985" />
+              </g>
+            </g>
+
+            <!-- 3. the finished report -->
+            <g transform="rotate(-2 1095 180)">
+              <rect x="1020" y="44" width="160" height="284" rx="6" fill="#8A2B34" opacity="0.12" />
+              <rect x="1015" y="38" width="160" height="284" rx="6" fill="#FBF9F5" />
+              <rect x="1015" y="38" width="160" height="284" rx="6" fill="none" stroke="#8A2B34" stroke-opacity="0.40" />
+
+              <rect x="1033" y="60" width="82" height="9" rx="4.5" fill="#8A2B34" opacity="0.45" />
+              <rect x="1033" y="77" width="116" height="6" rx="3" fill="#8A2B34" opacity="0.22" />
+
+              <g fill="none" stroke="#8A2B34" stroke-width="18" transform="rotate(-90 1095 142)">
+                <circle cx="1095" cy="142" r="30" stroke-opacity="0.55" stroke-dasharray="75.4 113.1" />
+                <circle cx="1095" cy="142" r="30" stroke-opacity="0.38" stroke-dasharray="56.5 132" stroke-dashoffset="-75.4" />
+                <circle cx="1095" cy="142" r="30" stroke-opacity="0.26" stroke-dasharray="33.9 154.6" stroke-dashoffset="-131.9" />
+                <circle cx="1095" cy="142" r="30" stroke-opacity="0.15" stroke-dasharray="22.6 165.9" stroke-dashoffset="-165.8" />
+              </g>
+
+              <g fill="#8A2B34">
+                <rect x="1032" y="246" width="22" height="26" rx="2" opacity="0.35" />
+                <rect x="1066" y="232" width="22" height="40" rx="2" opacity="0.50" />
+                <rect x="1100" y="254" width="22" height="18" rx="2" opacity="0.28" />
+                <rect x="1134" y="224" width="22" height="48" rx="2" opacity="0.60" />
+              </g>
+              <path d="M 1030 272 H 1160" stroke="#8A2B34" stroke-opacity="0.30" />
+              <rect x="1033" y="292" width="98" height="6" rx="3" fill="#8A2B34" opacity="0.20" />
+            </g>
+
+          </g>
+        </svg>
+      </div>
       <div class="hero-inner">
         <p class="eyebrow">Data Analytics Portfolio</p>
         <h1>Turning raw data into clear decisions.</h1>
@@ -352,16 +464,17 @@
                 <span class="thumb-name">Power BI</span>
               </div>
               <div class="thumb-tiles">
-                <div class="thumb-tile"><span>IMPORT-RELIANT</span><b>16</b></div>
-                <div class="thumb-tile"><span>CHINA LEADS</span><b>20/39</b></div>
+                <div class="thumb-tile"><span>STATES</span><b>50</b></div>
+                <div class="thumb-tile"><span>TOTAL VALUE</span><b>$105B</b></div>
               </div>
+              <!-- top 6 producing states, heights to scale: NV 12.6 / AZ 10.4 / TX 10.2 / AK 6.4 / CA 5.9 / UT 3.9 ($B) -->
               <div class="thumb-bars">
-                <i style="height:40%;background:var(--t-a)"></i>
-                <i style="height:62%;background:var(--t-a)"></i>
-                <i style="height:52%;background:var(--t-b)"></i>
-                <i style="height:80%;background:var(--t-a)"></i>
-                <i style="height:68%;background:var(--t-b)"></i>
                 <i style="height:95%;background:var(--t-a)"></i>
+                <i style="height:78%;background:var(--t-a)"></i>
+                <i style="height:77%;background:var(--t-a)"></i>
+                <i style="height:48%;background:var(--t-a)"></i>
+                <i style="height:44%;background:var(--t-a)"></i>
+                <i style="height:30%;background:var(--t-b)"></i>
               </div>
             </div>
 
@@ -410,7 +523,6 @@
         <span class="eyebrow">Selected work</span>
         <div class="work-title-row">
           <h2>Three dashboards, one reading room.</h2>
-          <span class="sub">Each embed keeps its own palette &mdash; the frame makes them a set.</span>
         </div>
       </div>
 
@@ -421,12 +533,12 @@
           <div class="card-surface">
             <div class="card-head">
               <p class="card-kicker">Interactive report created in <span>Power BI</span></p>
-              <h3>Mineral Production &amp; Import Dependence</h3>
+              <h3>Mineral Production</h3>
             </div>
             <div class="embed-well">
               <div class="embed-frame">
                 <iframe
-                  title="Mineral Production and Import Dependence dashboard"
+                  title="Mineral Production dashboard"
                   src="https://app.powerbi.com/view?r=eyJrIjoiZDQzMzk5MjYtZjk3Ny00Zjc3LWI2MjgtNWY5ZGJlNDllNjk2IiwidCI6IjVkNjE0ZDU2LWJiYjItNGZlNC1iOTI2LWFlNTQzMjdkYjcyMiIsImMiOjR9"
                   allowFullScreen
                   loading="lazy"
