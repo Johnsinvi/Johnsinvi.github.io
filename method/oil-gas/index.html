@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Oil and Gas Production: source and method | Clear Data Report</title>
+  <meta name="description" content="How the US oil and gas dashboard was built in native Excel: Power Query ETL, a data model with DAX, and the barrel-of-oil-equivalent conversion that lets crude and gas be added at all." />
+
+  <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg" />
+  <meta name="theme-color" content="#E7E2D8" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Oil and Gas Production: source and method" />
+  <meta property="og:description" content="Twenty-six years of EIA monthly production, modelled inside one Excel workbook with no VBA." />
+  <meta property="og:url" content="https://cleardatareport.com/method/oil-gas/" />
+  <meta property="og:image" content="https://cleardatareport.com/assets/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Oil and Gas Production: source and method" />
+  <meta name="twitter:description" content="Twenty-six years of EIA monthly production, modelled inside one Excel workbook with no VBA." />
+  <meta name="twitter:image" content="https://cleardatareport.com/assets/og-image.png" />
+
+  <link rel="stylesheet" href="../../assets/method.css" />
+</head>
+<body id="top">
+
+  <header>
+    <div class="header-inner">
+      <a href="../../" class="brand">
+        <span class="mark">
+          <svg width="26" height="26" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
+            <rect x="4" y="4" width="12" height="3.1" rx="1.4"/>
+            <rect x="4" y="4" width="3.1" height="12" rx="1.4"/>
+            <rect x="16" y="24.9" width="12" height="3.1" rx="1.4"/>
+            <rect x="24.9" y="16" width="3.1" height="12" rx="1.4"/>
+            <circle cx="16" cy="16" r="3.4"/>
+          </svg>
+        </span>
+        <span class="word">Clear Data Report</span>
+      </a>
+      <nav>
+        <a href="../../#work">Work</a>
+        <a href="../../#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <div class="doc-head">
+      <p class="eyebrow">Excel | Source and method</p>
+      <h1>Put crude and gas on one scale, and gas carries 64% of the energy.</h1>
+      <p class="standfirst">
+        Twenty-six years of US monthly oil and gas production, modelled and
+        visualised entirely inside one Excel workbook. Power Query does the
+        cleaning, a data model does the maths, and there is no VBA anywhere in it.
+      </p>
+      <div class="doc-meta">
+        <span class="chip">Excel</span>
+        <span class="chip">Power Query</span>
+        <span class="chip">Power Pivot</span>
+        <span class="chip">DAX</span>
+        <span class="chip">Dynamic arrays</span>
+        <span class="chip">EIA</span>
+      </div>
+
+      <div class="figures" aria-label="Key figures">
+        <div class="figures-grid">
+          <div class="figure">
+            <b>178.7B</b>
+            <span>Barrels of oil equivalent, Jan 2000 to Apr 2026</span>
+          </div>
+          <div class="figure">
+            <b>64%</b>
+            <span>Of that energy is natural gas, not crude</span>
+          </div>
+          <div class="figure">
+            <b>42%</b>
+            <span>Texas share of state-level crude output</span>
+          </div>
+          <div class="figure">
+            <b>32</b>
+            <span>Producing states, at monthly grain</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="doc-body">
+
+      <section>
+        <h2>The question</h2>
+        <p>
+          The EIA publishes US crude oil production in thousands of barrels and natural
+          gas production in millions of cubic feet, in two separate files, each with
+          three header rows and dates stored as serial numbers. They describe the same
+          industry in units that cannot be added together.
+        </p>
+        <p>
+          So the question is not only which states produce the most - it is
+          <strong>what US hydrocarbon output actually looks like when crude and gas are
+          measured on one scale</strong>. That turns out to change the answer, which is
+          the subject of the technical note below.
+        </p>
+        <p>
+          There is a second question behind this build, aimed at a different audience:
+          <strong>can plain Excel produce a dashboard that stands next to dedicated
+          visualisation software?</strong> No add-ins, no macros, nothing that is not in
+          the box.
+        </p>
+      </section>
+
+      <section>
+        <h2>How it is structured</h2>
+        <p>
+          One dashboard sheet, four zones, with the pivot and helper layers hidden
+          behind it. Every visual responds to the same two slicers, so the whole sheet
+          answers as one instrument rather than four charts that happen to share a page.
+        </p>
+        <table class="job-table">
+          <tbody>
+            <tr>
+              <th>Title bar and KPI row</th>
+              <td>Crude, gas, combined energy and the year-on-year move. The values are text boxes linked to cube formulas, so they follow the slicers rather than sitting still</td>
+            </tr>
+            <tr>
+              <th>Filter rail</th>
+              <td>Year and State. Two slicers driving every pivot, chart and KPI on the sheet at once</td>
+            </tr>
+            <tr>
+              <th>Trend and ranking</th>
+              <td>Monthly output stacked by fuel, and the top ten producing states. The trend axis relabels itself: years across the full span, months once a year is selected</td>
+            </tr>
+            <tr>
+              <th>Mix and long run</th>
+              <td>The crude-to-gas split on an energy basis, and the full-period area chart that shows the shale inflection</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>The machinery underneath</h3>
+        <ul>
+          <li><strong>Power Query does all the cleaning.</strong> Four queries strip the header rows, drop the national and regional roll-up columns, unpivot the state columns to long form, extract the state name out of the description text, and filter to 2000 onward. No step is manual, so a refresh cannot silently skip one.</li>
+          <li><strong>A real data model, not sheet formulas.</strong> One fact table of 10,028 monthly rows joined to a generated date dimension, with the measures written in DAX.</li>
+          <li><strong>Cube formulas feed the KPI cards</strong>, which is what lets the headline numbers sit inside shapes and still react to a slicer.</li>
+          <li><strong>A dynamic-array helper layer feeds two of the charts</strong> - for reasons covered in the technical note.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>What it shows</h2>
+        <ul>
+          <li><strong>Gas dominates on an energy basis.</strong> Across the full period the split is roughly <strong>36% crude to 64% gas</strong> - the reverse of how US production is usually discussed.</li>
+          <li><strong>Texas is the crude story on its own</strong>, at about <strong>42%</strong> of state-level crude output.</li>
+          <li><strong>Output roughly tripled from the mid-2000s.</strong> The long-run area chart shows the shale inflection as a change in slope, not a step.</li>
+          <li>Totals for the period: <strong>64,322 million barrels of crude</strong> and <strong>663,114 billion cubic feet of gas</strong>, or <strong>178,652 million barrels of oil equivalent</strong> combined.</li>
+        </ul>
+      </section>
+
+      <section class="tech-note">
+        <p class="note-lead">Technical note</p>
+        <h2>Two choices that could have gone the other way</h2>
+
+        <h3>1. Converting gas at 5.8 Mcf per barrel of oil equivalent</h3>
+        <p>
+          Barrels and cubic feet cannot be added. The alternative to converting was to
+          show two separate totals and let the reader hold both in their head - which is
+          what most published charts do, and it is why the gas share is not common
+          knowledge.
+        </p>
+        <p>
+          Gas is converted at <strong>5.8 thousand cubic feet per barrel of oil
+          equivalent</strong>, the standard energy-content ratio, which makes crude and
+          gas addable on a single axis. That single decision is what produces the
+          headline above: <strong>on energy content, gas is roughly two thirds of US
+          output</strong>. It is a conversion, not a price, so it says nothing about
+          revenue - the two commodities are worth very different amounts per BOE, and
+          this dashboard deliberately does not claim otherwise.
+        </p>
+
+        <h3>2. Computing the top ten in a helper layer instead of filtering the pivot</h3>
+        <p>
+          The obvious way to build a top-ten chart in Excel is a Top 10 value filter on
+          the pivot table. It works, and then it fails silently:
+          <strong>filtering a state and clearing it again drops the value filter
+          altogether</strong>, and the chart quietly redraws with all 32 states. Nothing
+          errors. The reader simply sees a different chart from the one that was built,
+          and only if they happen to have touched a slicer first.
+        </p>
+        <p>
+          So the ranking is not filtered - it is <strong>computed</strong>. A hidden
+          helper sheet rebuilds the top ten from the pivot with dynamic array formulas
+          and feeds a regular chart, deliberately sorted ascending so the largest state
+          lands at the top of a bar chart without flipping the axis. The same layer
+          rebuilds the trend series so its date axis stays real, which is what lets it
+          relabel from years to months when a year is selected.
+        </p>
+        <p>
+          The general rule this came from is the part worth keeping:
+          <strong>never rely on a setting that a viewer's own interaction can silently
+          remove.</strong> If a state must survive interaction, compute it.
+        </p>
+      </section>
+
+      <section>
+        <h2>How the numbers were checked</h2>
+        <p>
+          Model output was compared against externally known figures rather than against
+          itself. For 2024: crude of <strong>4,186 million barrels</strong> across the
+          included states, which is about 11.4 million barrels a day and correct once
+          federal offshore is excluded; <strong>Texas crude of 2,077 million
+          barrels</strong>, about 5.7 million a day; and gas of <strong>40,388 billion
+          cubic feet</strong>. Anything that does not reconcile to a published daily rate
+          is a modelling error, not a discovery.
+        </p>
+      </section>
+
+      <section>
+        <h2>Caveats, stated plainly</h2>
+        <ul>
+          <li><strong>Federal offshore production is excluded by design</strong>, because it belongs to no state. The state columns therefore do not sum to the EIA national total, and the KPIs here are computed from the included states only.</li>
+          <li><strong>2026 is partial</strong> - January to April - so the last point of any annual view is not a full year.</li>
+          <li><strong>Gas is marketed production</strong> and crude is field production; they are the EIA's own published series, not derived estimates.</li>
+          <li>The BOE conversion is <strong>energy content, not value</strong>.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Source and data</h2>
+        <div class="source-list">
+          <div class="source-row">
+            <span class="k">Code</span>
+            <span class="v"><a href="https://github.com/Johnsinvi/us-oil-gas-excel-dashboard" target="_blank" rel="noopener">github.com/Johnsinvi/us-oil-gas-excel-dashboard</a> - the workbook, the raw EIA files, and the scripts used for the design pass</span>
+          </div>
+          <div class="source-row">
+            <span class="k">Data</span>
+            <span class="v">EIA monthly crude oil field production and natural gas marketed production by state, Jan 2000 to Apr 2026</span>
+          </div>
+          <div class="source-row">
+            <span class="k">Licence</span>
+            <span class="v">US Government public domain</span>
+          </div>
+          <div class="source-row">
+            <span class="k">Tools</span>
+            <span class="v">Excel: Power Query, Power Pivot data model, DAX, cube formulas, dynamic arrays, slicers. No VBA in the workbook</span>
+          </div>
+        </div>
+      </section>
+
+      <div class="doc-foot-nav">
+        <a class="btn btn-ghost" href="../../#proj-3">Back to the dashboard</a>
+        <a class="btn btn-ghost" href="https://github.com/Johnsinvi/us-oil-gas-excel-dashboard" target="_blank" rel="noopener">View the code</a>
+      </div>
+
+    </div>
+
+  </main>
+
+  <section id="contact" class="contact-band">
+    <div class="contact-inner">
+      <div>
+        <span class="eyebrow">Contact</span>
+        <p>The fastest way to reach me is LinkedIn or email.</p>
+      </div>
+      <div class="contact-actions">
+        <a class="btn btn-ghost" href="https://www.linkedin.com/in/johndpereyra" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="btn btn-ghost" href="mailto:johnd.pereyra@gmail.com">Email</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="mark">
+          <svg width="22" height="22" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
+            <rect x="4" y="4" width="12" height="3.1" rx="1.4"/>
+            <rect x="4" y="4" width="3.1" height="12" rx="1.4"/>
+            <rect x="16" y="24.9" width="12" height="3.1" rx="1.4"/>
+            <rect x="24.9" y="16" width="3.1" height="12" rx="1.4"/>
+            <circle cx="16" cy="16" r="3.4"/>
+          </svg>
+        </span>
+        <span>cleardatareport.com</span>
+      </div>
+      <div class="footer-links">
+        <a href="../../">Work</a>
+        <a href="../../#contact">Contact</a>
+        <a href="https://www.linkedin.com/in/johndpereyra" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="mailto:johnd.pereyra@gmail.com">Email</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,246 @@
+/* ===== Bone Ledger, method pages =====
+   Shared by the three write-ups under /method/. Same palette, type and depth
+   language as index.html; only the layout differs (one reading column instead
+   of a gallery wall). Font url() is relative to THIS file, so it resolves to
+   assets/fonts/ from any page depth. No external requests. */
+
+@font-face {
+  font-family: 'IBM Plex Sans';
+  src: url('fonts/IBMPlexSans-latin-var.woff2') format('woff2');
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --canvas: #E7E2D8;
+  --header-bg: #EBE6DD;
+  --card: #F3EFE8;
+  --tray: #E1DBCF;
+  --contact-bg: #E4DED2;
+  --footer-bg: #211F1A;
+
+  --ink: #23211C;
+  --secondary: #575146;
+  --muted: #575146;
+  --accent: #8A2B34;
+  --accent-dark: #5E141C;
+  --on-accent: #FBF9F5;
+
+  --chip-bg: #FBF9F5;
+  --chip-border: #DAD3C6;
+  --chip-text: #4A453B;
+  --border: #8F8674;
+
+  --footer-text: #B8B0A0;
+  --footer-brand: #E7E2D8;
+
+  --wrap: 1160px;
+  --read: 720px;
+
+  --hi-top: inset 0 1px 0 rgba(255,255,255,0.85);
+  --sh-card: 3px 4px 8px -2px rgba(31,28,22,0.18), 12px 18px 40px -8px rgba(31,28,22,0.12);
+  --sh-header: 0 1px 0 rgba(31,28,22,0.07), 0 12px 26px -16px rgba(31,28,22,0.30);
+  --well-inset: inset 3px 4px 10px rgba(31,28,22,0.11), inset -1px -2px 3px rgba(255,255,255,0.55);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: var(--canvas);
+  background-image: radial-gradient(circle at 30% 10%, #ECE7DD, #E1DBCF 70%);
+  background-attachment: fixed;
+  color: var(--ink);
+  min-height: 100vh;
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+a { color: var(--accent); text-decoration: none; transition: color 0.18s; }
+a:hover { color: var(--accent-dark); }
+svg { display: block; }
+
+/* ===== Header ===== */
+header {
+  position: sticky; top: 0; z-index: 20; height: 78px;
+  background: rgba(235, 230, 221, 0.9);
+  backdrop-filter: blur(8px);
+  box-shadow: var(--sh-header);
+}
+.header-inner {
+  max-width: var(--wrap); margin: 0 auto; height: 100%; padding: 0 2rem;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.brand { display: inline-flex; align-items: center; gap: 12px; color: var(--ink); }
+.brand:hover { color: var(--ink); }
+.brand .word { font-size: 1.06rem; font-weight: 600; letter-spacing: -0.01em; }
+header nav { display: flex; align-items: center; gap: 1.9rem; }
+header nav a { color: var(--secondary); font-size: 0.94rem; font-weight: 500; }
+header nav a:hover { color: var(--ink); }
+
+/* ===== Layout ===== */
+main { flex: 1; width: 100%; max-width: var(--wrap); margin: 0 auto; padding: 0 2rem; }
+.reading { max-width: var(--read); }
+
+.eyebrow {
+  font-size: 0.75rem; font-weight: 700; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--accent);
+}
+
+.doc-head { padding: 3.5rem 0 0; }
+.doc-head h1 {
+  font-size: 2.5rem; font-weight: 600; letter-spacing: -0.02em; line-height: 1.12;
+  margin: 0.9rem 0 0; max-width: var(--read); text-wrap: balance;
+}
+.doc-head p.standfirst {
+  font-size: 1.14rem; color: var(--secondary); max-width: var(--read); margin: 1.1rem 0 0;
+}
+.doc-meta {
+  display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.4rem;
+}
+.chip {
+  display: inline-flex; align-items: center; height: 30px; padding: 0 0.9rem;
+  border-radius: 999px; background: var(--chip-bg); border: 1px solid var(--chip-border);
+  color: var(--chip-text); font-size: 0.75rem; font-weight: 600;
+  box-shadow: var(--hi-top);
+}
+
+/* ===== Numbers first (Nayara's pattern: the figures before the prose) ===== */
+.figures {
+  margin: 2.6rem 0 0;
+  background: var(--tray); border-radius: 18px; padding: 1rem;
+  box-shadow: var(--well-inset);
+}
+.figures-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.85rem;
+}
+.figure {
+  background: var(--card); border-radius: 12px; padding: 0.95rem 1.05rem;
+  box-shadow: var(--hi-top), 2px 3px 6px -2px rgba(31,28,22,0.14);
+}
+.figure b {
+  display: block; font-size: 1.6rem; font-weight: 700; line-height: 1.1;
+  color: var(--accent); font-variant-numeric: tabular-nums; letter-spacing: -0.015em;
+}
+.figure span {
+  display: block; margin-top: 0.35rem; font-size: 0.78rem; color: var(--secondary);
+  line-height: 1.35;
+}
+
+/* ===== Body sections ===== */
+.doc-body { padding: 1rem 0 0; }
+.doc-body section { margin-top: 2.8rem; }
+.doc-body h2 {
+  font-size: 1.32rem; font-weight: 600; letter-spacing: -0.01em; color: var(--ink);
+  margin-bottom: 0.9rem;
+}
+.doc-body h3 {
+  font-size: 1rem; font-weight: 700; color: var(--ink); margin: 1.5rem 0 0.5rem;
+}
+.doc-body p { color: var(--secondary); margin-bottom: 0.95rem; max-width: var(--read); }
+.doc-body p strong, .doc-body li strong { color: var(--ink); font-weight: 600; }
+.doc-body ul { list-style: none; max-width: var(--read); margin-bottom: 0.95rem; }
+.doc-body ul li {
+  color: var(--secondary); padding-left: 1.15rem; position: relative; margin-bottom: 0.55rem;
+}
+.doc-body ul li::before {
+  content: ""; position: absolute; left: 0; top: 0.62em;
+  width: 5px; height: 5px; border-radius: 50%; background: var(--accent);
+}
+
+/* structure table: one stated job per page/zone (Marius Helle's pattern) */
+.job-table { width: 100%; border-collapse: collapse; max-width: var(--read); margin-bottom: 0.95rem; }
+.job-table th, .job-table td {
+  text-align: left; padding: 0.6rem 0.9rem 0.6rem 0;
+  border-bottom: 1px solid var(--chip-border); vertical-align: top;
+  font-size: 0.94rem;
+}
+.job-table th {
+  color: var(--ink); font-weight: 600; white-space: nowrap; padding-right: 1.4rem;
+  width: 34%;
+}
+.job-table td { color: var(--secondary); }
+
+/* the defended choice - the one section that earns the page */
+.tech-note {
+  background: var(--card); border-radius: 16px; border-left: 4px solid var(--accent);
+  padding: 1.5rem 1.6rem 1.1rem; box-shadow: var(--sh-card), var(--hi-top);
+  max-width: var(--read);
+}
+.tech-note h2 { margin-bottom: 0.4rem; }
+.tech-note .note-lead { font-size: 0.82rem; font-weight: 600; color: var(--accent); margin-bottom: 0.9rem; letter-spacing: 0.02em; }
+.tech-note p:last-child, .tech-note ul:last-child { margin-bottom: 0; }
+
+/* source block */
+.source-list { max-width: var(--read); }
+.source-row {
+  display: flex; gap: 1.2rem; padding: 0.75rem 0;
+  border-bottom: 1px solid var(--chip-border);
+  font-size: 0.94rem; flex-wrap: wrap;
+}
+.source-row:last-child { border-bottom: none; }
+.source-row .k { color: var(--ink); font-weight: 600; min-width: 132px; }
+.source-row .v { color: var(--secondary); flex: 1; min-width: 220px; word-break: break-word; }
+
+.doc-foot-nav {
+  margin: 3rem 0 0; padding-top: 1.6rem; border-top: 1px solid var(--chip-border);
+  display: flex; gap: 0.75rem; flex-wrap: wrap;
+}
+.btn {
+  display: inline-flex; align-items: center; gap: 0.45rem;
+  font-size: 0.9rem; font-weight: 600; border-radius: 9px;
+  transition: all 0.18s; cursor: pointer;
+  height: 48px; padding: 0 1.35rem;
+}
+.btn-ghost {
+  background: var(--card); color: var(--accent);
+  border: 1px solid var(--border); box-shadow: var(--hi-top);
+}
+.btn-ghost:hover { border-color: var(--accent); color: var(--accent-dark); }
+
+/* ===== Contact + footer (same as the home page) ===== */
+.contact-band {
+  margin-top: 3.5rem; background: var(--contact-bg);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), inset 0 -1px 0 rgba(31,28,22,0.06);
+}
+.contact-inner {
+  max-width: var(--wrap); margin: 0 auto; padding: 1.75rem 2rem;
+  display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap;
+}
+.contact-inner .eyebrow { display: block; margin-bottom: 0.6rem; }
+.contact-inner p { font-size: 1rem; color: var(--secondary); }
+.contact-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+
+footer { background: var(--footer-bg); }
+.footer-inner {
+  max-width: var(--wrap); margin: 0 auto; padding: 1.5rem 2rem;
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
+}
+.footer-brand { display: inline-flex; align-items: center; gap: 0.7rem; color: var(--footer-brand); }
+.footer-brand span { font-size: 0.9rem; font-weight: 600; }
+.footer-links { display: flex; gap: 1.6rem; flex-wrap: wrap; }
+.footer-links a { color: var(--footer-text); font-size: 0.88rem; }
+.footer-links a:hover { color: var(--footer-brand); }
+
+/* ===== Responsive ===== */
+@media (max-width: 860px) {
+  .figures-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 720px) {
+  .header-inner { padding: 0 1.2rem; }
+  header nav { gap: 1rem; }
+  main { padding: 0 1.2rem; }
+  .doc-head { padding-top: 2.4rem; }
+  .doc-head h1 { font-size: 1.85rem; }
+  .doc-head p.standfirst { font-size: 1.02rem; }
+  .figures-grid { grid-template-columns: 1fr; }
+  .tech-note { padding: 1.2rem 1.2rem 0.9rem; }
+  .job-table th { width: auto; }
+  .contact-inner, .footer-inner { padding-left: 1.2rem; padding-right: 1.2rem; }
+}

@@ -4,21 +4,21 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Clear Data Report | Data Analytics Portfolio</title>
-  <meta name="description" content="Clear Data Report - interactive dashboards on public energy and finance data, built in Power BI, Python and Excel." />
+  <meta name="description" content="Clear Data Report - interactive dashboards on US federal energy, mining and banking data. Built in Power BI, Python and Excel, each rebuilt from source with its method written up." />
 
   <!-- Brand / social -->
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
   <meta name="theme-color" content="#E7E2D8" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Clear Data Report | Data Analytics Portfolio" />
-  <meta property="og:description" content="Interactive dashboards on public energy and finance data, built in Power BI, Python and Excel." />
+  <meta property="og:description" content="Interactive dashboards on US federal energy, mining and banking data. Built in Power BI, Python and Excel, each with its method written up." />
   <meta property="og:url" content="https://cleardatareport.com" />
   <meta property="og:image" content="https://cleardatareport.com/assets/og-image.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Clear Data Report | Data Analytics Portfolio" />
-  <meta name="twitter:description" content="Interactive dashboards on public energy and finance data, built in Power BI, Python and Excel." />
+  <meta name="twitter:description" content="Interactive dashboards on US federal energy, mining and banking data. Built in Power BI, Python and Excel, each with its method written up." />
   <meta name="twitter:image" content="https://cleardatareport.com/assets/og-image.png" />
 
   <style>
@@ -181,6 +181,22 @@
       box-shadow: var(--hi-top);
     }
 
+    /* ===== Credibility strip =====
+       The checkable equivalent of a years-and-titles credentials bar: every claim
+       here can be verified from the method pages and the repos. Deliberately
+       borderless - a full-width rule would cut across the hero panel edge. */
+    .proof {
+      margin-top: 2rem; position: relative; z-index: 1;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.6rem;
+      max-width: 900px;
+    }
+    .proof div { padding-top: 0.85rem; border-top: 2px solid var(--accent); }
+    .proof b {
+      display: block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 0.35rem;
+    }
+    .proof span { font-size: 0.88rem; color: var(--secondary); line-height: 1.45; }
+
     /* ===== Thumbnail rail ===== */
     .rail { margin-top: 2.4rem; position: relative; z-index: 1; }
     .rail-head { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.9rem; }
@@ -233,10 +249,46 @@
       box-shadow: var(--sh-card), var(--hi-top);
     }
 
-    .card-head { margin-bottom: 1.1rem; }
+    .card-head {
+      margin-bottom: 1.1rem;
+      display: flex; align-items: flex-end; justify-content: space-between;
+      gap: 1rem; flex-wrap: wrap;
+    }
     .card-kicker { font-size: 0.82rem; font-weight: 600; color: var(--secondary); margin-bottom: 0.4rem; }
     .card-kicker span { color: var(--accent); }
     .project-card h3 { font-size: 1.42rem; font-weight: 600; letter-spacing: -0.01em; color: var(--ink); }
+
+    /* Discreet documentation link - reads as a footnote to the work, not a CV link */
+    .card-method {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-size: 0.85rem; font-weight: 600; color: var(--accent);
+      padding-bottom: 0.2rem; white-space: nowrap;
+      border-bottom: 1px solid rgba(138,43,52,0.35);
+    }
+    .card-method:hover { color: var(--accent-dark); border-bottom-color: var(--accent-dark); }
+    .card-method svg { width: 13px; height: 13px; }
+
+    /* ===== How these are built ===== */
+    .build { margin-top: 3.4rem; }
+    .build .eyebrow { display: block; margin-bottom: 0.7rem; }
+    .build h2 { font-size: 1.9rem; font-weight: 600; letter-spacing: -0.01em; color: var(--ink); }
+    .build > p.build-lead {
+      font-size: 1.02rem; color: var(--secondary); max-width: 660px; margin-top: 0.8rem;
+    }
+    .build-grid {
+      margin-top: 1.8rem;
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem;
+    }
+    .build-card {
+      background: var(--card); border-radius: 14px; padding: 1.35rem 1.4rem;
+      box-shadow: var(--sh-card), var(--hi-top);
+    }
+    .build-card .step {
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--accent); display: block; margin-bottom: 0.5rem;
+    }
+    .build-card h3 { font-size: 1.08rem; font-weight: 600; color: var(--ink); margin-bottom: 0.5rem; }
+    .build-card p { font-size: 0.92rem; color: var(--secondary); line-height: 1.55; }
 
     /* recessed well + framed embed */
     .embed-well {
@@ -279,8 +331,12 @@
     /* ===== Responsive ===== */
     @media (max-width: 860px) {
       .rail-track { grid-template-columns: 1fr; }
+      .proof { grid-template-columns: 1fr; gap: 1.1rem; }
+      .build-grid { grid-template-columns: 1fr; }
     }
     @media (max-width: 720px) {
+      .card-head { flex-direction: column; align-items: flex-start; gap: 0.6rem; }
+      .build h2 { font-size: 1.5rem; }
       .header-inner { padding: 0 1.2rem; }
       header nav { gap: 1rem; }
       main { padding: 0 1.2rem; }
@@ -435,11 +491,12 @@
         </svg>
       </div>
       <div class="hero-inner">
-        <p class="eyebrow">Data Analytics Portfolio</p>
-        <h1>Turning raw data into clear decisions.</h1>
+        <p class="eyebrow">US energy, mining and banking data</p>
+        <h1>One method, three different tools.</h1>
         <p class="lead">
-          A collection of interactive dashboards, each built in a different tool,
-          on public energy and finance data. Built with Power BI, Python and Excel.
+          Interactive dashboards built from raw US federal files. Each one is
+          authored in a different tool, rebuilt from source on every run, and its
+          method is written up alongside it.
         </p>
 
         <div class="skills-row">
@@ -449,6 +506,21 @@
           <span class="chip">DAX</span>
           <span class="chip">SQL</span>
           <span class="chip">Data Modeling</span>
+        </div>
+
+        <div class="proof">
+          <div>
+            <b>Public sources</b>
+            <span>USGS, FDIC and EIA. US federal data, public domain, no private extracts.</span>
+          </div>
+          <div>
+            <b>Reproducible</b>
+            <span>Every pipeline rebuilds from the raw files. Nothing is cleaned by hand.</span>
+          </div>
+          <div>
+            <b>Checked</b>
+            <span>Each build validates its own numbers against the source before it ships.</span>
+          </div>
         </div>
 
         <!-- Preview rail: the three dashboards, palette-matched to each embed below -->
@@ -532,8 +604,17 @@
         <article class="project-card" id="proj-1">
           <div class="card-surface">
             <div class="card-head">
-              <p class="card-kicker">Interactive report created in <span>Power BI</span></p>
-              <h3>Mineral Production</h3>
+              <div>
+                <p class="card-kicker">Interactive report created in <span>Power BI</span></p>
+                <h3>Mineral Production</h3>
+              </div>
+              <a class="card-method" href="method/mineral-production/">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+                  <path d="M3 2.2h6.2L13 6v7.8H3z" stroke-linejoin="round"/>
+                  <path d="M9 2.4V6h3.6M5.4 8.6h5.2M5.4 11h3.4" stroke-linecap="round"/>
+                </svg>
+                Source and method
+              </a>
             </div>
             <div class="embed-well">
               <div class="embed-frame">
@@ -552,8 +633,17 @@
         <article class="project-card" id="proj-2">
           <div class="card-surface">
             <div class="card-head">
-              <p class="card-kicker">Interactive report created in <span>Python</span></p>
-              <h3>Bank Health Scorecard</h3>
+              <div>
+                <p class="card-kicker">Interactive report created in <span>Python</span></p>
+                <h3>Bank Health Scorecard</h3>
+              </div>
+              <a class="card-method" href="method/bank-scorecard/">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+                  <path d="M3 2.2h6.2L13 6v7.8H3z" stroke-linejoin="round"/>
+                  <path d="M9 2.4V6h3.6M5.4 8.6h5.2M5.4 11h3.4" stroke-linecap="round"/>
+                </svg>
+                Source and method
+              </a>
             </div>
             <div class="embed-well">
               <div class="embed-frame">
@@ -572,8 +662,17 @@
         <article class="project-card" id="proj-3">
           <div class="card-surface">
             <div class="card-head">
-              <p class="card-kicker">Interactive report created in <span>Excel</span></p>
-              <h3>Oil &amp; Gas Production by State</h3>
+              <div>
+                <p class="card-kicker">Interactive report created in <span>Excel</span></p>
+                <h3>Oil &amp; Gas Production by State</h3>
+              </div>
+              <a class="card-method" href="method/oil-gas/">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+                  <path d="M3 2.2h6.2L13 6v7.8H3z" stroke-linejoin="round"/>
+                  <path d="M9 2.4V6h3.6M5.4 8.6h5.2M5.4 11h3.4" stroke-linecap="round"/>
+                </svg>
+                Source and method
+              </a>
             </div>
             <div class="embed-well">
               <div class="embed-frame">
@@ -588,6 +687,56 @@
           </div>
         </article>
 
+      </div>
+    </section>
+
+    <!-- ===== How these are built ===== -->
+    <section id="how" class="build">
+      <span class="eyebrow">How these are built</span>
+      <h2>The pipeline is part of the work.</h2>
+      <p class="build-lead">
+        Each dashboard rebuilds itself from the raw public files, and refuses to
+        build if its own checks fail. The full method for each one is written up
+        on its own page.
+      </p>
+
+      <div class="build-grid">
+        <div class="build-card">
+          <span class="step">01</span>
+          <h3>Data as code</h3>
+          <p>
+            Scripts turn the published files into tidy tables - mixed encodings,
+            three-row headers, withheld and range codes and all. No step is manual,
+            so a refresh cannot silently skip one.
+          </p>
+        </div>
+        <div class="build-card">
+          <span class="step">02</span>
+          <h3>Checks that stop the build</h3>
+          <p>
+            Every pipeline recomputes known figures and compares them to the source.
+            If an anchor fails, the build exits without writing anything, so a wrong
+            number cannot reach a chart.
+          </p>
+        </div>
+        <div class="build-card">
+          <span class="step">03</span>
+          <h3>Dashboard as code</h3>
+          <p>
+            The Power BI report is generated, not dragged together: Python writes the
+            semantic model and the report definition, a validator checks them, and a
+            drift guard refuses to overwrite hand edits it did not expect.
+          </p>
+        </div>
+        <div class="build-card">
+          <span class="step">04</span>
+          <h3>Designed before it is built</h3>
+          <p>
+            Palette and layout are decided first, then every colour pair is tested for
+            contrast and for colour-vision deficiency before a line of it is
+            transcribed. Failures get corrected, and the deviations are recorded.
+          </p>
+        </div>
       </div>
     </section>
 
